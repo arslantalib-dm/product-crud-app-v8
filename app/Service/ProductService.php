@@ -4,6 +4,8 @@ namespace App\Service;
 
 use App\Exports\ExportProduct;
 use App\Interface\ProductRepositoryInterface;
+use App\Jobs\ProductExportJob;
+use Illuminate\Events\Dispatcher;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ProductService
@@ -45,8 +47,17 @@ class ProductService
 
     public function export()
     {
-        $fileName = 'products.xlsx';
-        Excel::store(new ExportProduct, $fileName);
-        return asset('storage/' . $fileName);
+        try {
+            $fileName = 'products.xlsx';
+            if ($this->productRepository->count() <= 2000) {
+                dd($fileName);
+                Excel::store(new ExportProduct, $fileName);
+            } else {
+                ProductExportJob::dispatch($fileName);
+            }
+            return asset('storage/' . $fileName);
+        } catch (\Exception $th) {
+            throw new \Exception($th->getMessage());
+        }
     }
 }

@@ -15,6 +15,10 @@ Class ProductRepository implements ProductRepositoryInterface {
         return Product::where("id", $id)->first();
     }
 
+    public function count() {
+        return Product::count();
+    }
+
     public function findAll($data) {
         return Product::paginate(...$data);
     }

@@ -8,4 +8,5 @@ Interface ProductRepositoryInterface{
     public function delete($id);
     public function findBySlug($slug);
     public function findAll($data);
+    public function count();
 }

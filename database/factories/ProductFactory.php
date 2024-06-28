@@ -21,7 +21,7 @@ class ProductFactory extends Factory
             "name"=> $this->faker->name(),
             "slug"=> str::random(10),
             "description"=> str::random(100),
-            "price"=> $this->faker->randomDigit(),
+            "price"=> $this->faker->numberBetween(100, 10000),
         ];
     }
 }
