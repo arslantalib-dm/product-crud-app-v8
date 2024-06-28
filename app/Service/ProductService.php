@@ -49,7 +49,7 @@ class ProductService
     {
         try {
             $fileName = 'products.xlsx';
-            if ($this->productRepository->count() <= 2000) {
+            if ($this->productRepository->count() <= 10000) {
                 dd($fileName);
                 Excel::store(new ExportProduct, $fileName);
             } else {
